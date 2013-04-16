@@ -37,6 +37,12 @@ class Basecamp {
 		}
 	}
 	
+	function setOAuthAuthenticationToken($token) {
+		$this->authMethod 		= 'oAuth';
+		$this->access_token 	= $token;
+		$this->authenticated 	= true;
+	}
+	
 	function setServerAuthentication($username,$password) {		
 		$this->authMethod = 'server';
 		$this->username 	= $username;
