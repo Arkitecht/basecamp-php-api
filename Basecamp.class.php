@@ -68,7 +68,7 @@ class Basecamp {
 	function setAccount($account) {
 		$this->account = $account;
 	}
-	
+		
 	function getAccountURL($target) {
 		if ( !$this->account ) {
 			throw	new Exception('You must set an account first, using Basecamp::setAccount');
@@ -161,6 +161,11 @@ class Basecamp {
 	}
 
 	//- mark People
+	
+	function me() {
+		return $this->_makeAuthenticatedRequest($this->getAccountURL('people/me.json'));
+	}
+
 
 	function getPeople() {
 		return $this->_makeAuthenticatedRequest($this->getAccountURL('people.json'));
