@@ -1,6 +1,16 @@
 <?
+/**
+	* Project: Basecamp PHP API 
+	*	File: Basecamp.class.php
+	*
+	* 
+	*
+	*
+	*
+	*/ 
 require_once(dirname(__FILE__).'/Basecamp/Attachment.php');
 require_once(dirname(__FILE__).'/Basecamp/Project.php');
+require_once(dirname(__FILE__).'/Basecamp/Person.php');
 
 class Basecamp {
 	private $_client;
@@ -34,7 +44,7 @@ class Basecamp {
 		if ( $_SESSION[$session_key]->access_token ) {
 			$this->access_token 	= $_SESSION[$session_key]->access_token;
 			$this->authenticated 	= true;
-		}
+		} 
 	}
 	
 	function setOAuthAuthenticationToken($token) {
@@ -162,8 +172,12 @@ class Basecamp {
 
 	//- mark People
 	
-	function me() {
-		return $this->_makeAuthenticatedRequest($this->getAccountURL('people/me.json'));
+	function me($asPerson=false) {
+		$me = $this->_makeAuthenticatedRequest($this->getAccountURL('people/me.json'));
+		if ( $asPerson ) {
+			return Basecamp_Person::objectFromResponse($me,&$this);
+		}
+		return $me;
 	}
 
 
@@ -539,6 +553,10 @@ class Basecamp {
 		return $date;
 	}
 	
+	function getRawURL($url) {
+		return $this->_makeAuthenticatedRequest($url);
+	}
+	
 	//- mark Main request function
 	
 	function _makeAuthenticatedRequest($resource,$params=array(),$method='GET',$headers=array(),$returnRawResponse=false) {
@@ -640,7 +658,21 @@ class Basecamp {
 		
 		$decoded = json_decode($response);
 		$_SESSION[$this->session_key] = $decoded;		
+		return $decoded;
 	} 
+	
+	function refreshToken($refreshToken) {
+		$response = $this->_makeRequest('https://launchpad.37signals.com/authorization/token',array(
+			'type' => 'refresh',
+			'client_id'=>$this->client_id,
+			'client_secret'=>$this->client_secret,		
+			'redirect_uri'=>'http://'.$_SERVER['HTTP_HOST'].dirname(strtok($_SERVER['REQUEST_URI'],'?')).$this->oauth_url,
+			'refresh_token'=>$refreshToken
+		),'POST');
+		$decoded = json_decode($response);
+		$_SESSION[$this->session_key] = $decoded;		
+		return $decoded;
+	}
 
 	function _makeRequest($resource,$params,$method='GET',$headers=array()) {
 		$all_headers = $default_headers = array('Content-Type: application/json',"User-Agent: $this->app_name");

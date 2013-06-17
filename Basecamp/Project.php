@@ -1,9 +1,6 @@
 <?
-class Basecamp_Project {
-	private $_basecamp;
-	var $account;
-	var $id;
-		
+require_once(dirname(__FILE__)."/Object.php");
+class Basecamp_Project extends Basecamp_Object {		
 	public function __construct($account,$id,$basecamp='') {
 		$this->account 	= $account;
 		$this->id				= $id;
@@ -24,12 +21,7 @@ class Basecamp_Project {
 		}
 		return $project;
 	}
-	
-	public function setBasecamp(Basecamp $basecamp) {
-		$this->_basecamp = $basecamp;
-	}
-	
-	
+		
 	//- mark Access	
 	function getAccess($id) {
 		return $this->_basecamp->getAccesses('projects',$this->id);
