@@ -1,4 +1,4 @@
-<?
+<?php
 require_once(dirname(__FILE__)."/Object.php");
 class Basecamp_Project extends Basecamp_Object {		
 	public function __construct($account,$id,$basecamp='') {

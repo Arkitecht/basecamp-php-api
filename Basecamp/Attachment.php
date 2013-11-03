@@ -1,4 +1,5 @@
-<?
+<?php
+
 class Basecamp_Attachment {
 	var $token;
 	var $name;
