@@ -1,4 +1,5 @@
-<?
+<?php
+
 require_once(dirname(__FILE__)."/Object.php");
 class Basecamp_Person extends Basecamp_Object {
 	

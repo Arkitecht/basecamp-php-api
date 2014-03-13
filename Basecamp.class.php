@@ -1,4 +1,4 @@
-<?
+<?php
 /**
 	* Project: Basecamp PHP API 
 	*	File: Basecamp.class.php

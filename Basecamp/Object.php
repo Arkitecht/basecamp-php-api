@@ -1,4 +1,5 @@
-<?
+<?php
+
 class Basecamp_Object {
 	var $_basecamp;
 	var $account;
