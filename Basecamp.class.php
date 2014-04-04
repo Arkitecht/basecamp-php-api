@@ -621,12 +621,15 @@ class Basecamp {
 		
 		if ( $http_code == 401 ) {
 			$response = json_encode(array('error_code'=>401,'error'=>'Unauthorized Access'));
-		}
+		} elseif ( $http_code == 403 ) {
+			$response = json_encode(array('error_code'=>403,'error'=>'Forbidden'));
+    }
 			
 		if ( $this->debug ) {		
 			print_r(curl_getinfo($ch));
-			print $header;
-			print $response;
+			print "Header: $header\n";
+			print "Params: ".print_r($params,1);
+			print "Response: $response\n";
 		}
 		
 		if ( $returnRawResponse ) return $response;
