@@ -537,8 +537,22 @@ class Basecamp {
 	
 	function deleteMilestone($source,$sourceid,$id) {
 		return $this->_makeAuthenticatedRequest($this->getAccountURL("$source/$sourceid/calendar_events/$id.json"),null,'DELETE');
+	}	
+		
+	//- mark Stars
+	
+	function getStars() {
+		return $this->_makeAuthenticatedRequest($this->getAccountURL('stars.json'));
 	}
 	
+	function starProject($projectid) {
+		return $this->_makeAuthenticatedRequest($this->getAccountURL("projects/$projectid/star.json"),json_encode(array('project_id'=>$projectid)),'POST');
+	}
+	
+	function unStarProject($projectid) {
+		return $this->_makeAuthenticatedRequest($this->getAccountURL("projects/$projectid/star.json"),null,'DELETE');
+	}	
+
 	//- makeArray
 	function _makeArray($arg) {
 		if ( $arg && !is_array($arg) ) return array($arg);

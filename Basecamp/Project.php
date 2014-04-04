@@ -213,6 +213,15 @@ class Basecamp_Project extends Basecamp_Object {
 	function delete() {
 		return $this->_basecamp->deleteProject($this->id);
 	}
+	
+	function star() {
+		return $this->_basecamp->starProject($this->id);
+	}
+	
+	function unstar() {
+		return $this->_basecamp->unStarProject($this->id);
+	}
+
 }
 
 ?>
