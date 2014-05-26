@@ -85,11 +85,13 @@ class Basecamp {
 		}
 		return "$this->account/$target";
 	}
-	
+		
 	//- mark Projects
 	
-	function getProjects() {
-		return $this->_makeAuthenticatedRequest($this->getAccountURL('projects.json'));
+	//- jilagan: Modified to support limit and offset parameters, since default only allows for 
+	//  25 entries at a time and with offset = 0
+	function getProjects($limit=25, $offset=0) {
+   	    return $this->_makeAuthenticatedRequest($this->getAccountURL('projects.json?limit=' . $limit . '&offset=' . $offset));
 	}
 	
 	function getProject($id,$native=false) {
