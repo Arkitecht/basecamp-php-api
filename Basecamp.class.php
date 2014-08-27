@@ -405,7 +405,8 @@ class Basecamp {
 		
 		if ( $attachmentName ) {
 			if ( $isFilename ) {
-				//createAttachment and get token
+				$attachment = $this->createAttachment($tokenOrFilename);
+				$token = $attachment->token;
 			} else $token = $tokenOrFilename;
 			$args['attachments'] 	= array(new Basecamp_Attachment($token,$attachmentName));
 		}
