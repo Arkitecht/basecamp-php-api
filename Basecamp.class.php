@@ -640,7 +640,13 @@ class Basecamp {
 			$response = json_encode(array('error_code'=>401,'error'=>'Unauthorized Access'));
 		} elseif ( $http_code == 403 ) {
 			$response = json_encode(array('error_code'=>403,'error'=>'Forbidden'));
-    }
+    	}
+    	elseif ( $http_code == 429 ) {
+			$response = json_encode(array('error_code'=>429,'error'=>'Too Many Requests'));
+    	}
+    	elseif ( $http_code == 422 ) {
+			$response = json_encode(array('error_code'=>422,'error'=>'Identical Record Created Within Last 5 Mins'));
+    	}
 			
 		if ( $this->debug ) {		
 			print_r(curl_getinfo($ch));
